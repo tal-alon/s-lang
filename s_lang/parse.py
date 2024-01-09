@@ -60,4 +60,4 @@ def parse_code(code: str) -> Code:
         inst_parts = re.split(r"\s+", inst)
         instructions.append(inst_parts)
 
-    return instructions, labels
+    return Code(instructions, labels)

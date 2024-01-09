@@ -1,3 +1,9 @@
+from dataclasses import dataclass
+
 Instruction = list[str]
 Labels = dict[str, int]
-Code = tuple[list[Instruction], Labels]
+
+@dataclass
+class Code:
+    instructions: list[Instruction]
+    labels: Labels

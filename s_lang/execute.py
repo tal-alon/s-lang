@@ -89,12 +89,11 @@ def exec_instruction(pc: int, inst: Instruction, labels: Labels, variables: Vari
 
 
 def exec_code(code: Code, input_vars: list[int]) -> int:
-    instructions, labels = code
     variables = create_run_variables(input_vars)
     pc = 0
-    prog_len = len(instructions)
+    prog_len = len(code.instructions)
 
     while 0 <= pc < prog_len:
-        pc = exec_instruction(pc, instructions[pc], labels, variables)
+        pc = exec_instruction(pc, code.instructions[pc], code.labels, variables)
 
     return variables.y
