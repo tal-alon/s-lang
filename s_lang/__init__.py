@@ -1,4 +1,4 @@
-from s_lang.data_types import Code as _Code
+from s_lang.data_models import Code as _Code
 from s_lang.parse import parse_code as _parse_code
 from s_lang.execute import exec_code as _exec_code
 

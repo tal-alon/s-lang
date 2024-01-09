@@ -1,7 +1,7 @@
 from collections import defaultdict
 from dataclasses import dataclass, field
 
-from s_lang.data_types import Code, Labels, Instruction
+from s_lang.data_models import Code, Labels, Instruction
 from s_lang.parse import parse_var, is_label_valid
 
 Variable = tuple[str, int]

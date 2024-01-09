@@ -1,6 +1,6 @@
 import re
 
-from s_lang.data_types import Instruction, Code, Labels
+from s_lang.data_models import Instruction, Code, Labels
 
 
 def is_label_valid(label: str) -> bool:
