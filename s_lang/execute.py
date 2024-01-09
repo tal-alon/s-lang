@@ -39,14 +39,3 @@ def exec_instruction(pc: int, inst: Instruction, labels: Labels, variables: Vari
 
         case _:
             raise Exception(f"Syntax error at line {pc}: {' '.join(inst)}")
-
-
-def exec_code(code: Code, input_vars: list[int]) -> int:
-    variables = VariablesStore(input_vars)
-    pc = 0
-    prog_len = len(code.instructions)
-
-    while 0 <= pc < prog_len:
-        pc = exec_instruction(pc, code.instructions[pc], code.labels, variables)
-
-    return variables.y
