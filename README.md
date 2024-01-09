@@ -7,7 +7,6 @@ from s_lang import run
 
 
 def main() -> None:
-    path = "./programs/ex5b.s"
     inputs = [5]
     code = """
 Z <- Z + 1
