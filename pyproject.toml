@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "s-lang"
+name = "s-lang-mta"
 version = "0.1.0"
 description = "S lang interpreter"
 authors = ["Tal Alon <talalon369@gmail.com>"]
