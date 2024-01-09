@@ -17,26 +17,6 @@ def is_label_valid(label: str) -> bool:
     return 0 < int(idx)
 
 
-def parse_var(string: str) -> tuple[str, int]:
-    var_char: str = string[0]
-    var_idx_str: str = string[1:]
-
-    if var_char not in ("X", "Z", "Y") or (var_char == "Y" and var_idx_str):
-        raise ValueError("Invalid variable name")
-
-    var_idx_str = var_idx_str or "1"
-
-    if not var_idx_str.isnumeric():
-        raise ValueError("Invalid variable name")
-
-    var_idx = int(var_idx_str)
-
-    if var_idx <= 0:
-        raise ValueError("Invalid variable name")
-
-    return var_char, var_idx
-
-
 def read_lines(code: str) -> list[str]:
     return [line.rstrip() for line in code.split("\n")]
 
