@@ -1,4 +1,4 @@
-from s_lang.data_models import Code, Labels, Instruction
+from s_lang.data_models import Labels, Instruction
 from s_lang.variables_store import VariablesStore
 from s_lang.parse import is_label_valid
 
