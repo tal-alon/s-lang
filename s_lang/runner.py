@@ -1,6 +1,6 @@
 from s_lang.data_models import Code
 from s_lang.variables_store import VariablesStore
-from s_lang.execute import exec_instruction
+from s_lang.instructions import exec_instruction
 
 
 class Runner:
