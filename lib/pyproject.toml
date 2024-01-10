@@ -1,10 +1,13 @@
 [tool.poetry]
 name = "s-lang-mta"
-version = "0.1.4"
+version = "0.1.5"
 description = "S lang interpreter"
 authors = ["Tal Alon <talalon369@gmail.com>"]
 readme = "README.md"
-packages = [{include = "s_lang"}]
+packages = [
+    {include = "s_lang"},
+    {include = "cli"},
+]
 
 [tool.poetry.scripts]
 s_lang = "cli:app"
