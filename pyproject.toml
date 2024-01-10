@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "s-lang-mta"
-version = "0.1.2"
+version = "0.1.3"
 description = "S lang interpreter"
 authors = ["Tal Alon <talalon369@gmail.com>"]
 readme = "README.md"
