@@ -21,14 +21,27 @@ class RunParams(BaseModel):
     inputs: list[int]
 
 
+class RunResult(BaseModel):
+    output: int
+    error: str | None = None
+
+
 @app.get("/")
 async def root():
     return "OK"
 
 
 @app.post("/run")
-async def _run(params: RunParams):
-    return run(params.code, params.inputs)
+async def _run(params: RunParams) -> RunResult:
+    try:
+        return RunResult(
+            output=run(params.code, params.inputs)
+        )
+    except Exception as err:
+        return RunResult(
+            output=-1,
+            error=str(err)
+        )
 
 
 if __name__ == "__main__":
