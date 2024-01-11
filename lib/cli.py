@@ -11,18 +11,18 @@ def read_file(path: str) -> str:
 
 
 app = typer.Typer()
-__version__ = metadata.version(__package__)
+__version__ = metadata.version("s_lang_mta")
 
 
 def version_callback(value: bool) -> None:
     if value:
-        print(__version__)
+        typer.echo(__version__)
         raise typer.Exit()
 
 
 @app.callback()
 def callback(
-    _: bool = typer.Option(None, "--version", "-v", callback=version_callback)
+    _: bool = typer.Option(False, "--version", "-v", callback=version_callback)
 ) -> None:
     ...
 
@@ -30,7 +30,7 @@ def callback(
 @app.command()
 def run(
     path: str = typer.Argument(help="Path to S lang code to run"),
-    inputs: list[int] = typer.Argument(default=None, help="Input variables"),
+    inputs: list[int] = typer.Option(None, "--input", "-i", help="Input variables"),
 ) -> None:
     inputs = inputs or []
     code = read_file(path)
