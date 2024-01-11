@@ -30,7 +30,7 @@ def callback(
 @app.command()
 def run(
     path: str = typer.Argument(help="Path to S lang code to run"),
-    inputs: list[int] = typer.Option(None, "--input", "-i", help="Input variables"),
+    inputs: list[int] = typer.Argument(default=None, help="Input variables"),
 ) -> None:
     inputs = inputs or []
     code = read_file(path)
