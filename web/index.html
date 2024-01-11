@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S Language Executor</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script>
+</head>
+<body>
+    <header class="bg-primary text-white text-center p-3">
+        <h1>S Language Executor</h1>
+    </header>
+
+    <div class="container my-3">
+        <div class="form-group">
+            <label for="variablesInput">Variables (comma-separated integers):</label>
+            <input type="text" class="form-control" id="variablesInput" placeholder="1,8,4,1,2">
+        </div>
+
+        <div class="form-group">
+            <label for="codeInput">Code Input:</label>
+            <div id="codeInput" style="height: 200px; width: 100%;"></div>
+        </div>
+
+        <button id="executeButton" class="btn btn-primary">Execute</button>
+
+        <h4 class="mt-4">Output:</h4>
+        <pre id="resultOutput" class="bg-light p-3 border" style="margin-bottom:80px"></pre>
+    </div>
+    <footer class="bg-light text-center text-lg-start fixed-bottom">
+        <div class="text-center p-3">
+            © 2024 S Language Executor by <a href='https://www.linkedin.com/in/tal-alon-546b64180' target="_blank">Tal Alon</a>.
+        </div>
+    </footer>
+
+    <script src="assets/js/script.js"></script>
+</body>
+</html>
