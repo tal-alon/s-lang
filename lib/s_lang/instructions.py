@@ -1,100 +1,95 @@
-from s_lang.data_models import Labels, Instruction
+from s_lang.data_models import Labels, Instruction, State
 from s_lang.variables_store import VariablesStore
 from s_lang.parse import is_label_valid
 
 
-def inc_var(variables: VariablesStore, var: str, pc: int) -> int:
-    variables[var] += 1
-
-    return pc + 1
-
-
-def dec_var(variables: VariablesStore, var: str, pc: int) -> int:
-    variables[var] = max(variables[var] - 1, 0)
-
-    return pc + 1
+def inc_var(state: State, var: str) -> None:
+    state.variables[var] += 1
+    state.pc += 1
 
 
-def if_nez_goto(variables: VariablesStore, labels: Labels, var: str, label: str, pc: int) -> int:
+def dec_var(state: State, var: str) -> None:
+    new_val: int = max(state.variables[var] - 1, 0)
+    state.variables[var] = new_val
+    state.pc += 1
+
+
+def if_nez_goto(state: State, labels: Labels, var: str, label: str) -> None:
     if not is_label_valid(label):
         raise ValueError(f"invalid label")
 
-    val = variables[var]
+    val = state.variables[var]
     labels_target = labels.get(label, -1)
 
-    return labels_target if 0 < val else pc + 1
+    state.pc = labels_target if 0 < val else state.pc + 1
 
 
-def add_k(variables: VariablesStore, var: str, k: int, pc: int) -> int:
+def add_k(state: State, var: str, k: int) -> None:
     if k < 1:
         raise ValueError("invalid const")
 
-    variables[var] += k
-
-    return pc + 1
+    state.variables[var] += k
 
 
-def sub_k(variables: VariablesStore, var: str, k: int, pc: int) -> int:
+def sub_k(state: State, var: str, k: int) -> None:
     if k < 1:
         raise ValueError("invalid const")
 
-    variables[var] -= k
-
-    return pc + 1
+    state.variables[var] -= k
 
 
-def if_ez_goto(variables: VariablesStore, labels: Labels, var: str, label: str, pc: int) -> int:
+def if_ez_goto(state: State, labels: Labels, var: str, label: str) -> None:
     if not is_label_valid(label):
         raise ValueError(f"invalid label")
 
-    val = variables[var]
+    val = state.variables[var]
     labels_target = labels.get(label, -1)
 
-    return labels_target if 0 == val else pc + 1
+    state.pc = labels_target if 0 == val else state.pc + 1
 
 
-def goto(labels: Labels, label: str) -> int:
+def goto(state: State, labels: Labels, label: str) -> None:
     if not is_label_valid(label):
         raise ValueError(f"invalid label")
 
     labels_target = labels.get(label, -1)
 
-    return labels_target
+    state.pc = labels_target
 
 
-def exec_instruction(pc: int, inst: Instruction, labels: Labels, variables: VariablesStore) -> int:
+def exec_instruction(inst: Instruction, labels: Labels, state: State) -> None:
     try:
         match inst:
             # basic syntax:
 
             case [v1, "<-", v2] if v1 == v2:
-                return pc + 1
+                state.pc += 1
 
             case [v1, "<-", v2, "+", "1"] if v1 == v2:
-                return inc_var(variables, v1, pc)
+                inc_var(state, v1)
 
             case [v1, "<-", v2, "-", "1"] if v1 == v2:
-                return dec_var(variables, v1, pc)
+                dec_var(state, v1)
 
             case ["IF", v, "!=", "0", "GOTO", l]:
-                return if_nez_goto(variables, labels, v, l, pc)
+                if_nez_goto(state, labels, v, l)
 
             # syntactic sugars:
 
             case [v1, "<-", v2, "+", k] if v1 == v2 and isinstance(k, str) and k.isnumeric():
-                return add_k(variables, v1, int(k), pc)
+                add_k(state, v1, int(k))
 
             case [v1, "<-", v2, "-", k] if v1 == v2 and isinstance(k, str) and k.isnumeric():
-                return sub_k(variables, v1, int(k), pc)
+                sub_k(state, v1, int(k))
 
             case ["IF", v, "=", "0", "GOTO", l]:
-                return if_ez_goto(variables, labels, v, l, pc)
+                if_ez_goto(state, labels, v, l)
 
             case ["GOTO", l]:
-                return goto(labels, l)
+                return goto(state, labels, l)
 
             case _:
                 raise ValueError("unknown command")
 
     except Exception as err:
-        raise Exception(f"Syntax error at line {pc}: {' '.join(inst)}\n{err}")
+        raise Exception(f"Syntax error at line {state.pc}: {' '.join(inst)}\n{err}")
